@@ -1,25 +1,48 @@
-// Select modal elements
-const modal = document.getElementById("choir-modal"); // The modal container
-const choirName = document.getElementById("choir-name"); // The element for the choir name inside the modal
-const closeModal = modal.querySelector(".close"); // The close button inside the modal
+// Directory to load choir JSON files
+const choirDirectory = 'choirs';
 
-// Add event listeners to choir elements
-document.querySelectorAll(".choir").forEach((choir) => {
-    choir.addEventListener("click", () => {
-        const name = choir.querySelector("h3").textContent; // Extract the choir name from the clicked card
-        choirName.textContent = name; // Update the modal content with the choir name
-        modal.classList.remove("hidden"); // Show the modal by removing the 'hidden' class
-    });
-});
+// Select elements
+const choirsContainer = document.querySelector(".choirs");
 
-// Close modal when the close button is clicked
-closeModal.addEventListener("click", () => {
-    modal.classList.add("hidden"); // Add the 'hidden' class to hide the modal
-});
+// Function to load choirs dynamically
+async function loadChoirs() {
+    try {
+        // Fetch list of choir JSON files
+        const response = await fetch(`${choirDirectory}/index.json`);
+        const choirFiles = await response.json();
 
-// Close modal when clicking outside the modal content
-modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-        modal.classList.add("hidden"); // Add the 'hidden' class if clicked outside modal content
+        // Loop through choir files and fetch their data
+        for (const file of choirFiles) {
+            const choirResponse = await fetch(`${choirDirectory}/${file}`);
+            const choirData = await choirResponse.json();
+            addChoirToPage(choirData);
+        }
+    } catch (error) {
+        console.error("Error loading choirs:", error);
     }
-});
+}
+
+// Function to add a choir to the page
+function addChoirToPage(choir) {
+    const choirElement = document.createElement("div");
+    choirElement.classList.add("choir");
+
+    choirElement.innerHTML = `
+        <img src="assets/images/placeholder.jpg" alt="${choir.name}">
+        <h3>${choir.name}</h3>
+        <p>${choir.location}</p>
+    `;
+
+    // Add click event to show modal
+    choirElement.addEventListener("click", () => {
+        const modal = document.getElementById("choir-modal");
+        const choirName = document.getElementById("choir-name");
+        choirName.textContent = choir.name;
+        modal.classList.remove("hidden");
+    });
+
+    choirsContainer.appendChild(choirElement);
+}
+
+// Load choirs on page load
+document.addEventListener("DOMContentLoaded", loadChoirs);
