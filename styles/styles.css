@@ -86,10 +86,11 @@ section {
 
 .modal-content {
     background: white;
-    padding: 1.5rem;
+    padding: 1rem;
     border-radius: 8px;
-    width: 90%; /* Adjusted from 80% */
-    max-width: 400px; /* Reduced from 600px */
+    width: auto;
+    max-width: 300px;
+    text-align: center;
     position: relative;
 }
 
@@ -99,9 +100,9 @@ section {
 
 .close {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 10px;
-    font-size: 1.2rem; /* Slightly smaller */
+    font-size: 1rem;
     cursor: pointer;
 }
 
