@@ -7,13 +7,27 @@ permalink: /choir-directory/
 <h1>Choir Directory</h1>
 <div class="choir-list">
   {% for choir in site.choirs %}
-  <div class="choir-card">
-    <img src="{{ choir.img }}" alt="{{ choir.name }}">
+  <div 
+    class="choir-card" 
+    style="background-image: url('{{ choir.img }}');" 
+    data-choir="{{ choir.name }}"
+    data-type="{{ choir.type }}"
+    data-location="{{ choir.location }}"
+    data-year="{{ choir.year }}"
+    data-website="{{ choir.website }}">
     <h3>{{ choir.name }}</h3>
-    <p>Type: {{ choir.type }}</p>
-    <p>Location: {{ choir.location }}</p>
-    <p>Year Established: {{ choir.year }}</p>
-    <a href="{{ choir.website }}" target="_blank">Visit Website</a>
   </div>
   {% endfor %}
+</div>
+
+<!-- Modal Structure -->
+<div id="choir-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="choir-name"></h2>
+    <p id="choir-type"></p>
+    <p id="choir-location"></p>
+    <p id="choir-year"></p>
+    <a id="choir-website" href="#" target="_blank">Visit Website</a>
+  </div>
 </div>
