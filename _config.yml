@@ -1,0 +1,4 @@
+collections:
+  choirs:
+    output: true
+permalink: pretty
