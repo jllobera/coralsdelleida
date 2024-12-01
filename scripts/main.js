@@ -22,6 +22,7 @@ async function loadChoirs() {
     }
 }
 
+
 // Function to add a choir to the page
 function addChoirToPage(choir) {
     const choirElement = document.createElement("div");
@@ -45,4 +46,30 @@ function addChoirToPage(choir) {
 }
 
 // Load choirs on page load
-document.addEventListener("DOMContentLoaded", loadChoirs);
+document.addEventListener("DOMContentLoaded", function () {
+    // Select modal elements
+    const modal = document.getElementById("choir-modal"); // Modal container
+    const choirName = document.getElementById("choir-name"); // Element inside modal to show choir name
+    const closeModal = modal.querySelector(".close"); // Close button inside the modal
+
+    // Add event listeners to each choir element
+    document.querySelectorAll(".choir").forEach((choir) => {
+        choir.addEventListener("click", () => {
+            const name = choir.querySelector("h3").textContent; // Get the name from the clicked choir card
+            choirName.textContent = name; // Update the modal with the choir name
+            modal.classList.remove("hidden"); // Show the modal by removing the 'hidden' class
+        });
+    });
+
+    // Close the modal when the close button is clicked
+    closeModal.addEventListener("click", () => {
+        modal.classList.add("hidden"); // Add the 'hidden' class to hide the modal
+    });
+
+    // Close the modal if clicked outside the modal content
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.classList.add("hidden"); // Add 'hidden' to close the modal
+        }
+    });
+});
