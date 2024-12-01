@@ -1,54 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choir Directory</title>
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body>
-    <header>
-        <h1>Choir Directory</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="agenda.html">Concert Agenda</a></li>
-            </ul>
-        </nav>
-    </header>
+---
+layout: default
+title: "Choir Directory"
+---
 
-    <section id="choir-list">
-        <div class="filter-bar">
-            <select id="location-filter">
-                <option value="">All Locations</option>
-                <option value="city-a">City A</option>
-                <option value="city-b">City B</option>
-            </select>
-            <select id="type-filter">
-                <option value="">All Types</option>
-                <option value="choir-type-a">Type A</option>
-                <option value="choir-type-b">Type B</option>
-            </select>
-        </div>
-        <div class="choirs">
-            <div class="choir" data-location="city-a" data-type="choir-type-a">
-                <img src="assets/images/placeholder.jpg" alt="Choir 1">
-                <h3>Choir 1</h3>
-            </div>
-            <div class="choir" data-location="city-b" data-type="choir-type-b">
-                <img src="assets/images/placeholder.jpg" alt="Choir 2">
-                <h3>Choir 2</h3>
-            </div>
-        </div>
-    </section>
-
-    <div id="choir-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="choir-name"></h2>
-        </div>
-    </div>
-
-    <script src="scripts/main.js"></script>
-</body>
-</html>
+<h1>Choir Directory</h1>
+<div class="choir-list">
+  {% for choir in site.choirs %}
+  <div class="choir-card">
+    <img src="{{ choir.img }}" alt="{{ choir.name }}">
+    <h3>{{ choir.name }}</h3>
+    <p>Type: {{ choir.type }}</p>
+    <p>Location: {{ choir.location }}</p>
+    <p>Year Established: {{ choir.year }}</p>
+    <a href="{{ choir.website }}" target="_blank">Visit Website</a>
+  </div>
+  {% endfor %}
+</div>
