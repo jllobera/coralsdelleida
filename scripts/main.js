@@ -1,36 +1,25 @@
-// Modal Functionality
-const modal = document.getElementById('choir-modal');
-const modalContent = {
-    name: document.getElementById('choir-name'),
-    image: document.getElementById('choir-image'),
-    description: document.getElementById('choir-description'),
-};
-const closeBtn = document.querySelector('.close');
+// Select modal elements
+const modal = document.getElementById("choir-modal"); // The modal container
+const choirName = document.getElementById("choir-name"); // The element for the choir name inside the modal
+const closeModal = modal.querySelector(".close"); // The close button inside the modal
 
-// Open Modal
-document.querySelectorAll('.choir').forEach(choir => {
-    choir.addEventListener('click', () => {
-        modalContent.name.textContent = choir.querySelector('h3').textContent;
-        modalContent.image.src = choir.querySelector('img').src;
-        modalContent.description.textContent = `Detailed information about ${modalContent.name.textContent}`;
-        modal.classList.remove('hidden');
+// Add event listeners to choir elements
+document.querySelectorAll(".choir").forEach((choir) => {
+    choir.addEventListener("click", () => {
+        const name = choir.querySelector("h3").textContent; // Extract the choir name from the clicked card
+        choirName.textContent = name; // Update the modal content with the choir name
+        modal.classList.remove("hidden"); // Show the modal by removing the 'hidden' class
     });
 });
 
-// Close Modal
-closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+// Close modal when the close button is clicked
+closeModal.addEventListener("click", () => {
+    modal.classList.add("hidden"); // Add the 'hidden' class to hide the modal
+});
 
-// Filter Functionality
-document.getElementById('location-filter').addEventListener('change', filterChoirs);
-document.getElementById('type-filter').addEventListener('change', filterChoirs);
-
-function filterChoirs() {
-    const location = document.getElementById('location-filter').value;
-    const type = document.getElementById('type-filter').value;
-
-    document.querySelectorAll('.choir').forEach(choir => {
-        const matchesLocation = !location || choir.dataset.location === location;
-        const matchesType = !type || choir.dataset.type === type;
-        choir.style.display = matchesLocation && matchesType ? 'block' : 'none';
-    });
-}
+// Close modal when clicking outside the modal content
+modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.classList.add("hidden"); // Add the 'hidden' class if clicked outside modal content
+    }
+});
